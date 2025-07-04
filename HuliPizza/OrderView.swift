@@ -8,34 +8,51 @@
 import SwiftUI
 
 struct OrderView: View {
-    var orders: [Int]
+    @Binding var orders: [OrderItem]
     
     var body: some View {
         VStack {
-            
-            HStack {
-                Text("Order Pizza")
-                    .font(.title)
-                Spacer()
-                Label {
-                    Text(19.90, format: .currency(code: "ZAR"))
-                } icon: {
-                    Image(systemName: orders.isEmpty ? "cart" : "cart.circle.fill")
+            ZStack(alignment: .top) {
+                
+                ScrollView {
+                    ForEach($orders) { order in
+                        //Text(order.item.name)
+                         OrderRowView(order: order)
+                            .padding(10)
+                            .background(.regularMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                    }
+                    .padding(.top, 50)
                 }
+                .padding(.top, 20)
+                
+                HStack {
+                    Text("Order Pizza")
+                        .font(.title)
+                    Spacer()
+                    Label {
+                        Text(19.90, format: .currency(code: "ZAR"))
+                    } icon: {
+                        Image(systemName: orders.isEmpty ? "cart" : "cart.circle.fill")
+                    }
+                }
+                .padding()
+                .background(.ultraThinMaterial)
             }
+            
             .padding()
-            .background(.gray.opacity(0.5))
             
-            ScrollView {
-                ForEach(orders, id: \.self) { order in
-                    OrderRowView(order: order)
-                        .padding(10)
-                        .background(.regularMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
+            Button("Delete Order") {
+                if !orders.isEmpty {
+                    orders.removeLast()
                 }
             }
+            .padding(.vertical, 5)
+            .padding(.horizontal, 20)
+            .background(.regularMaterial, in: Capsule())
+            .padding(7)
         }
         .background(Color("Surf"))
     }
@@ -43,5 +60,5 @@ struct OrderView: View {
 
 
 #Preview {
-    OrderView(orders:  [1,2,3,4,6])
+    OrderView(orders: .constant(testOrders))
 }
