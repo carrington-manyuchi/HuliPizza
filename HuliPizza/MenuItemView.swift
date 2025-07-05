@@ -61,8 +61,6 @@ struct MenuItemView: View {
             .foregroundStyle(.white)
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .padding()
-
-
         }
     }
 }

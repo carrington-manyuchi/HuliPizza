@@ -37,7 +37,6 @@ struct OrderView: View {
                 .padding()
                 .background(.ultraThinMaterial)
             }
-            
             .padding()
             
             Button("Delete Order") {

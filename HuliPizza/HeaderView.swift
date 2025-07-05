@@ -37,7 +37,6 @@ struct HeaderView: View {
                         .fontWeight(.heavy)
                 }
             }
-            
         }
         .background(.ultraThinMaterial)
     }

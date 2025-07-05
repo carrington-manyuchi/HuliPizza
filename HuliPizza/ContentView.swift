@@ -18,7 +18,6 @@ struct ContentView: View {
             HeaderView()
                 .shadow(radius: 5)
                 .environment(\.colorScheme, .light)
-            
                       
             StatusBarView(showOrders: $showOrders)
             
@@ -35,7 +34,6 @@ struct ContentView: View {
         .padding()
         .environmentObject(orders)
         .background(.linearGradient(colors: [.cyan,Color("Surf"),Color("Sky"),.white], startPoint: .topLeading, endPoint: .bottom))
-
     }
 }
 
