@@ -8,26 +8,36 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @ObservedObject var orders: OrderModel
-
-
+    @EnvironmentObject var orders: OrderModel
+    @Environment(\.verticalSizeClass) var vSizeClass: UserInterfaceSizeClass?
+    
     var body: some View {
         VStack {
-            ZStack(alignment: .bottomTrailing) {
-                Image("surfBanner")
-                    .resizable()
-                    .scaledToFit()
+            if (vSizeClass ?? .regular) != .compact {
                 
-                Text("Huli Pizza Company")
-                    .font(.custom("Georgia", size: 30, relativeTo: .title))
-                    .foregroundStyle(.regularMaterial)
-                    .fontWeight(.semibold)
+                ZStack(alignment: .bottomTrailing) {
+                    Image("surfBanner")
+                        .resizable()
+                        .scaledToFit()
+                    
+                    Text("Huli Pizza Company")
+                        .font(.custom("Georgia", size: 30, relativeTo: .title))
+                        .foregroundStyle(.regularMaterial)
+                        .fontWeight(.semibold)
+                }
+            } else {
+                HStack(alignment: .bottom) {
+                    Image("surfBanner")
+                        .resizable()
+                        .scaledToFit()
+                    
+                    Text("Huli Pizza Company")
+                        .font(.custom("Georgia", size: 30, relativeTo: .title))
+                        .foregroundStyle(Color("Surf"))
+                        .fontWeight(.heavy)
+                }
             }
-            Label {
-                Text(orders.orderTotal, format: .currency(code: "ZAR"))
-            } icon: {
-                Image(systemName: orders.orderItems.isEmpty ? "cart" : "cart.circle.fill")
-            }
+            
         }
         .background(.ultraThinMaterial)
     }
@@ -35,5 +45,6 @@ struct HeaderView: View {
 
 
 #Preview {
-    HeaderView(orders: OrderModel())
+    HeaderView()
+        .environmentObject(OrderModel())
 }

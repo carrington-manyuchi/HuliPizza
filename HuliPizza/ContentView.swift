@@ -15,20 +15,13 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            HeaderView(orders: orders)
+            HeaderView()
                 .shadow(radius: 5)
+                .environment(\.colorScheme, .light)
             
-            HStack {
-                Text("\(orders.orderItems.count) orders")
-                Spacer()
-                Button {
-                    showOrders.toggle()
-                } label: {
-                    Image(systemName: showOrders ? "cart" : "menucard")
-                }
-            }
-            .font(.title2)            
-
+                      
+            StatusBarView(showOrders: $showOrders)
+            
             if showOrders {
                 OrderView(orders: orders)
             } else {
@@ -40,11 +33,15 @@ struct ContentView: View {
             Spacer()
         }
         .padding()
+        .environmentObject(orders)
+        .background(.linearGradient(colors: [.cyan,Color("Surf"),Color("Sky"),.white], startPoint: .topLeading, endPoint: .bottom))
+
     }
 }
 
 #Preview {
     ContentView(menu:  MenuModel().menu)
+        .environmentObject(OrderModel())
 }
 
 
